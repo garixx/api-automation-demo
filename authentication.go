@@ -5,38 +5,35 @@ import (
 	"net/http"
 )
 
-// Define our struct
+// data store
 type authenticationMiddleware struct {
 	tokenUsers map[string]string
 }
 
-// Initialize it somewhere
-func (amw *authenticationMiddleware) Populate() {
-	if amw.tokenUsers == nil {
-		amw.tokenUsers = make(map[string]string)
-	}
-	amw.tokenUsers["00000000"] = "user0"
-	amw.tokenUsers["aaaaaaaa"] = "userA"
-	amw.tokenUsers["05f717e5"] = "randomUser"
-	amw.tokenUsers["deadbeef"] = "user0"
-}
-
-func (amw *authenticationMiddleware) Put(username string, token string){
+// add token to token's store
+func (amw *authenticationMiddleware) Put(username string, token string) {
 	if amw.tokenUsers == nil {
 		amw.tokenUsers = make(map[string]string)
 	}
 
-	amw.tokenUsers[token] = username
+	amw.tokenUsers[token] = "Bearer " + username
 }
 
-// Middleware function, which will be called for each request
-func (amw *authenticationMiddleware) Middleware(next http.Handler) http.Handler {
+func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		token := r.Header.Get("Authorization")
+		var token string
 
-		if user, found := amw.tokenUsers[token]; found {
+		if contains(routes, r.URL.Path) {
+			next.ServeHTTP(w, r)
+			return
+		}
+
+		logrus.Info("check is user authorized")
+		token = r.Header.Get("Authorization")
+
+		if user, found := tokenUsers[token]; found {
 			// We found the token in our map
-			logrus.Infof("Authenticated user %s\n", user)
+			logrus.Infof("Authenticated user: %s", user)
 			// Pass down the request to the next middleware (or final handler)
 			next.ServeHTTP(w, r)
 		} else {
@@ -44,4 +41,13 @@ func (amw *authenticationMiddleware) Middleware(next http.Handler) http.Handler 
 			http.Error(w, "Forbidden", http.StatusForbidden)
 		}
 	})
+}
+
+func contains(list []string, str string) bool {
+	for i := range list {
+		if list[i] == str {
+			return true
+		}
+	}
+	return false
 }
