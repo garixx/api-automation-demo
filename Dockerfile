@@ -7,7 +7,7 @@ WORKDIR /src
 
 # Собрать двоичный файл!
 RUN go test
-RUN CGO_ENABLED=0 GOOS=linux go build -o kvs
+RUN CGO_ENABLED=0 GOOS=linux go build -o server
 
 
 # Этап 2: Сборка образа со службой хранилища пар ключ/значение
@@ -15,10 +15,10 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o kvs
 # Использовать образ "scratch", не содержащий распространяемых файлов
 FROM scratch
 # Скопировать двоичный файл из контейнера build
-COPY --from=build /src/kvs .
+COPY --from=build /src/server .
 # Если предполагается использовать TLS, скопировать файлы .pem
 #COPY --from=build /src/*.pem .
 # Сообщить фреймворку Docker, что служба будет использовать порт 8080
 EXPOSE 8081
 # Команда, которая должна быть выполнена при запуске контейнера
-CMD ["/kvs"]
+CMD ["/server"]
