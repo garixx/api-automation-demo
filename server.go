@@ -45,7 +45,7 @@ func main() {
 	logrus.Info("Change event      : PUT    ", updateEventRoute)
 	logrus.Info("Delete event      : DELETE ", deleteEventRoute)
 
-	log.Printf("Listening URL: ", *url)
+	log.Println("Listening URL: ", *url)
 	log.Println("Listening on port: ", *port)
 
 	http.ListenAndServe(":"+strconv.Itoa(*port), r)

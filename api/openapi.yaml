@@ -1,0 +1,274 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Simple test API
+  description: A simple TAQC project API
+
+servers:
+  - url: http://localhost:8081
+
+security:
+  - BasicAuth: []
+
+paths:
+  /auth/login:
+    post:
+      description: Create a new bearer token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginPayload'
+
+      responses:
+        '201':
+          description: Successfully created a new event
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /auth/logout:
+    post:
+      description: Drop exist bearer token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogoutPayload'
+
+      responses:
+        '204':
+          description: Successfully removed a token
+
+  /event:
+    post:
+      description: Create a new event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+
+      responses:
+        '201':
+          description: Successfully created a new event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /events:
+    get:
+      description: Returns a list of artists
+
+      responses:
+        '200':
+          description: Successfully returned a list of artists
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /event/{id}:
+    get:
+      description: Obtain information about an event
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: Successfully returned an event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    put:
+      description: Replace new event
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateEvent'
+
+      responses:
+        '202':
+          description: Successfully updated event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    delete:
+      description: Delete an event
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+
+      responses:
+        '204':
+          description: Successfully returned an event
+
+
+        '400':
+          description: Invalid request
+
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    LoginPayload:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LogoutPayload:
+      type: object
+      required:
+        - token
+      properties:
+        username:
+          type: string
+    Event:
+      type: object
+      required:
+        - title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        guests:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guest'
+        time:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        notes:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    UpdateEvent:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        guests:
+          type: array
+          items:
+            $ref: '#/components/schemas/Guest'
+        time:
+          type: string
+          format: date-time
+        timezone:
+          type: string
+        duration:
+          type: integer
+          format: int32
+        notes:
+          type: array
+          items:
+            type: string
+
+    Guest:
+      type: object
+      properties:
+        firstname:
+          type: string
+        lastname:
+          type: string
+        company:
+          $ref: '#/components/schemas/Company'
+
+    Company:
+      type: object
+      properties:
+        title:
+          type: string
+        profile:
+          type: string
