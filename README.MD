@@ -16,5 +16,5 @@ Check OPEN API spec in /api folder.
 
 ## Run using pre-built docker image
 
-- docker push akirraint/api-server:latest
+- docker pull akirraint/api-server:latest
 - docker run --rm -p 8081:8081 akirraint/api-server:latest
