@@ -43,7 +43,7 @@ paths:
         '204':
           description: Successfully removed a token
 
-  /event:
+  /api/event:
     post:
       description: Create a new event
       requestBody:
@@ -70,7 +70,7 @@ paths:
                   message:
                     type: string
 
-  /events:
+  /api/events:
     get:
       description: Returns a list of artists
 
@@ -94,7 +94,7 @@ paths:
                   message:
                     type: string
 
-  /event/{id}:
+  /api/event/{id}:
     get:
       description: Obtain information about an event
       parameters:
