@@ -258,7 +258,7 @@ components:
     Guest:
       type: object
       properties:
-        firstname:
+        name:
           type: string
         lastname:
           type: string
@@ -268,7 +268,7 @@ components:
     Company:
       type: object
       properties:
-        title:
+        name:
           type: string
         profile:
           type: string
