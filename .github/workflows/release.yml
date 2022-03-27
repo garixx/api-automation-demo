@@ -1,21 +1,14 @@
-# This is a basic workflow to help you get started with Actions
+name: Release to Docker Hub
 
-name: Run CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
+#   push:
+#     tags:
+#       - "*.*.*"
   push:
     branches: [ master ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build-and-test"
-  build-and-test:
-    # The type of runner that the job will run on
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Login to Docker Hub
@@ -27,17 +20,17 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17
-          
+          go-version: 1.7
+
       - name: Checkout code
         uses: actions/checkout@v2
-        
+
       - name: Fetch required Go modules
-        run: go mod download
-        
+        run:  go mod download
+
       - name: Build
-        run: go build -v ./...
-        
+        run:  go build -v ./...
+
       - name: Build and push Docker image
         id:   docker_build
         uses: docker/build-push-action@v2
@@ -47,4 +40,3 @@ jobs:
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-        
