@@ -93,6 +93,10 @@ var events = map[string]event{
 	"2": exampleEvent2,
 }
 
+func VersionHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "{ \"version\": \"3.0\" }")
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var auth LoginRequest
 

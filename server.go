@@ -10,6 +10,7 @@ import (
 )
 
 const (
+	versionRoute     = "/version"
 	loginRoute       = "/auth/login"
 	logoutRoute      = "/auth/logout"
 	createEventRoute = "/api/event"
@@ -27,6 +28,7 @@ func main() {
 	flag.Parse()
 
 	r := mux.NewRouter()
+	r.HandleFunc(versionRoute, VersionHandler).Methods("GET")
 	r.HandleFunc(loginRoute, LoginHandler).Methods("POST")
 	r.HandleFunc(logoutRoute, LogoutHandler).Methods("POST")
 	r.HandleFunc(getEventsRoute, EventsHandler).Methods("GET")
@@ -39,6 +41,7 @@ func main() {
 
 	logrus.Infof("Authorize new user: POST %s. Payload: {\"username\": \"youruser\", \"password\": \"yourpass\"}", loginRoute)
 	logrus.Infof("Drop user session : POST %s. Payload: {\"token\", \"yourtoken\"}", logoutRoute)
+	logrus.Info("Get version    : GET    ", versionRoute)
 	logrus.Info("Get all events    : GET    ", getEventsRoute)
 	logrus.Info("Get event by id   : GET    ", getEventRoute)
 	logrus.Info("Create event      : POST   ", createEventRoute)
