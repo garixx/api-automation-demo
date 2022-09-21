@@ -18,3 +18,10 @@ Check OPEN API spec in /api folder.
 
 - docker pull akirraint/api-server:latest
 - docker run --rm -p 8081:8081 akirraint/api-server:latest
+
+## Run using docker-compose.yml with the app and SwaggerUI:
+
+- docker-compose up (optional -d flag) in project root folder
+
+  App: http://localhost/8081/auth/login (/api/events, etc)
+  SwaggerUI: http://localhost/8087
