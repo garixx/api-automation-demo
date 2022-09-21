@@ -94,7 +94,7 @@ var events = map[string]event{
 }
 
 func VersionHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "{ \"version\": \"3.1\" }")
+	fmt.Fprintf(w, "{ \"version\": \"3.3\" }")
 }
 
 func LoginHandler(w http.ResponseWriter, r *http.Request) {

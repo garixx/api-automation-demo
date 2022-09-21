@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
     app:
-        image: akirraint/api-server
+        image: akirraint/api-automation-demo
         container_name: test-api-server
         ports:
             - "8081:8081"
