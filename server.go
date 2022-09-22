@@ -10,6 +10,7 @@ import (
 )
 
 const (
+	swaggerRoute     = "/swagger"
 	versionRoute     = "/version"
 	loginRoute       = "/auth/login"
 	logoutRoute      = "/auth/logout"
@@ -20,14 +21,17 @@ const (
 	deleteEventRoute = "/api/event/{id:[0-9]+}"
 )
 
-var routes = []string{loginRoute, logoutRoute}
+var routes = []string{loginRoute, logoutRoute, swaggerRoute}
+var swaggerUrl string
 
 func main() {
+	swaggerUrl = *flag.String("swagger-url", "http://127.0.0.1:8087", "swagger docs url")
 	url := flag.String("url", "http://127.0.0.1", "server port")
 	port := flag.Int("port", 8081, "server port")
 	flag.Parse()
 
 	r := mux.NewRouter()
+	r.HandleFunc(swaggerRoute, SwaggerHandler).Methods("GET")
 	r.HandleFunc(versionRoute, VersionHandler).Methods("GET")
 	r.HandleFunc(loginRoute, LoginHandler).Methods("POST")
 	r.HandleFunc(logoutRoute, LogoutHandler).Methods("POST")

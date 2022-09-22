@@ -97,6 +97,10 @@ func VersionHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "{ \"version\": \"3.3\" }")
 }
 
+func SwaggerHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, swaggerUrl, http.StatusSeeOther)
+}
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	var auth LoginRequest
 
@@ -113,6 +117,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	tokenUsers["Bearer "+newToken] = auth.Username
 
 	logrus.Infof("tokens: %v", tokenUsers)
+	w.WriteHeader(http.StatusCreated)
 	fmt.Fprintf(w, newToken)
 }
 
