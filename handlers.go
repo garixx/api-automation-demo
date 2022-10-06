@@ -94,7 +94,8 @@ var events = map[string]event{
 }
 
 func VersionHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "{ \"version\": \"3.3\" }")
+	w.Header().Set("content-type", "application/json")
+	fmt.Fprintf(w, "{ \"version\": \"3.5\" }")
 }
 
 func SwaggerHandler(w http.ResponseWriter, r *http.Request) {

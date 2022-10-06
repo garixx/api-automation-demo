@@ -1,0 +1,16 @@
+GET http://localhost:8081/api/events
+Accept: application/json
+Authorization: Bearer eXl5eQ==
+
+###
+POST http://localhost:8081/auth/login
+Content-Type: application/json
+
+{
+  "login": "xxxx",
+  "password": "yyyy"
+}
+
+
+
+###
