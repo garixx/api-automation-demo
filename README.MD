@@ -16,8 +16,8 @@ Check OPEN API spec in /api folder.
 
 ## Run using pre-built docker image
 
-- docker pull akirraint/api-server:latest
-- docker run --rm -p 8081:8081 akirraint/api-server:latest
+- docker pull akirraint/api-automation-demo:latest
+- docker run --rm -p 8081:8081 akirraint/api-automation-demo:latest
 
 ## Run using docker-compose.yml with the app and SwaggerUI:
 
