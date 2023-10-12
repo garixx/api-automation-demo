@@ -23,5 +23,5 @@ Check OPEN API spec in /api folder.
 
 - docker-compose up (optional -d flag) in project root folder
 
-  App: http://localhost/8081/auth/login (/api/events, etc)
-  SwaggerUI: http://localhost/8087
+  App: http://localhost:8081/auth/login (/api/events, etc)
+  SwaggerUI: http://localhost:8087
