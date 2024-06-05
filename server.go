@@ -43,14 +43,15 @@ func main() {
 
 	r.Use(AuthMiddleware)
 
+	logrus.Infof("Swagger port      : GET    %s:8087", *url)
 	logrus.Infof("Authorize new user: POST %s. Payload: {\"username\": \"youruser\", \"password\": \"yourpass\"}", loginRoute)
 	logrus.Infof("Drop user session : POST %s. Payload: {\"token\", \"yourtoken\"}", logoutRoute)
-	logrus.Info("Get version    : GET    ", versionRoute)
-	logrus.Info("Get all events    : GET    ", getEventsRoute)
-	logrus.Info("Get event by id   : GET    ", getEventRoute)
-	logrus.Info("Create event      : POST   ", createEventRoute)
-	logrus.Info("Change event      : PUT    ", updateEventRoute)
-	logrus.Info("Delete event      : DELETE ", deleteEventRoute)
+	logrus.Info("Get version        : GET    ", versionRoute)
+	logrus.Info("Get all events     : GET    ", getEventsRoute)
+	logrus.Info("Get event by id    : GET    ", getEventRoute)
+	logrus.Info("Create event       : POST   ", createEventRoute)
+	logrus.Info("Change event       : PUT    ", updateEventRoute)
+	logrus.Info("Delete event       : DELETE ", deleteEventRoute)
 
 	log.Println("Listening URL: ", *url)
 	log.Println("Listening on port: ", *port)
