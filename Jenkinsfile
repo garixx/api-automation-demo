@@ -11,6 +11,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 echo 'second'
+                ls
             }
         }
         stage('Deploy') {
