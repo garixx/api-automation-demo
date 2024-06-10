@@ -10,7 +10,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing...'
-                pwd
+                echo 'second'
             }
         }
         stage('Deploy') {
